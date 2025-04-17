@@ -29,9 +29,10 @@ bool WordEntry::isOnlyLetters(const std::string& input)
 
 bool WordEntry::validateWord(std::string& word)
 {
+	std::cout << "word input: " << word << std::endl;
 	for (char& c : word)
 		c = std::tolower(static_cast<unsigned char>(c));
-	std::cout << "word input: " << word << std::endl;
+	std::cout << "tolower: " << word << std::endl;
 	std::vector<std::string> allSolutions = WordEntry::loadAnswersFromFile("data/14855solutions.txt");
 	for (const std::string& str : allSolutions)
 	{
