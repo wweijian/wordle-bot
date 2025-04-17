@@ -1,14 +1,15 @@
 #include <iostream>
-#include <WordEntry.h>
+#include <Answer.h>
 
-std::string inputAnswer(size_t maxLength);
 
 int main()
 {
-
-	std::string answer = inputAnswer((std::size_t) 5);	
-	if (WordEntry::validateWord(answer) == true)
-		std::cout << "Answer Accepted. Wordie will begin guessing." << std::endl;	
-	solveWordle();
+	Answer wordleAns;
+	// solveFor(WordleAns);
+	// std::cout << "Submitted answer: " << wordleAns.correct << std::endl;
+	// std::cout << "Solutions remaining " << wordleAns.remainingSolutions.size() << std::endl;
+	// std::cout << "letters unavailable " << wordleAns.unavailableLetters.size() << std::endl;
+	// std::cout << "Attempt number:" << wordleAns.attempt << std::endl;
+	
 	return 0;
 }

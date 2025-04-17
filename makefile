@@ -3,10 +3,8 @@ OBJS_DIR =
 INCL_DIR = includes
 
 SRCS = $(SRCS_DIR)/main.cpp\
-		$(SRCS_DIR)/WordEntry.cpp\
-		$(SRCS_DIR)/InputAnswer.cpp
-
-OBJS = $(OBJS_DIR)wordle-bot
+		$(SRCS_DIR)/Answer.cpp
+OBJS = $(OBJS_DIR)wordie-bot
 CC = g++
 
 
@@ -15,11 +13,11 @@ CC = g++
 compile:
 		clear
 		$(CC) $(SRCS) -I $(INCL_DIR) -o $(OBJS)
-		@echo -- wordle-bot.o compiled --
+		@echo -- wordie-bot compiled --
 
 run:
 		clear
-		@./wordle-bot.o
+		@./wordie-bot
 clean:
 		rm -rf $(OBJS)
 
