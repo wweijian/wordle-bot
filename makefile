@@ -1,10 +1,11 @@
 SRCS_DIR = srcs
-OBJS_DIR = 
+TARGET_DIR = 
 INCL_DIR = includes
 
 SRCS = $(SRCS_DIR)/main.cpp\
-		$(SRCS_DIR)/Answer.cpp
-OBJS = $(OBJS_DIR)wordie-bot
+		$(SRCS_DIR)/answer.cpp\
+		$(SRCS_DIR)/solver.cpp
+TARGET = $(TARGET_DIR)wordie-bot
 CC = g++
 
 
@@ -12,13 +13,15 @@ CC = g++
 
 compile:
 		clear
-		$(CC) $(SRCS) -I $(INCL_DIR) -o $(OBJS)
+		$(CC) $(SRCS) -I $(INCL_DIR) -o $(TARGET)
 		@echo -- wordie-bot compiled --
 
 run:
 		clear
 		@./wordie-bot
 clean:
-		rm -rf $(OBJS)
+		clear
+		@rm -rf $(TARGET)
+		@echo wordie killed
 
 .PHONY: compile clean run re

@@ -1,56 +1,63 @@
-#include <iostream>
+#include "solver.h"
 #include <vector>
-#include <string>
-#include "Answer.h"
+#include <string> 
 
 
-std::vector<unsigned int> countLetterInstance(const std::vector<std::string>& words, const Answer& answer) {
-    std::vector<unsigned int> letterCounts(26, 0); // Start with a vector of size 26 initialized to 0
-
-    for (const std::string& word : words) {
-        std::vector<bool> seen(26, false); // Reset for each word
-
-        for (char c : word) {
-            if (std::isalpha(c)) {
-                int index = c - 'a';  // Calculate the index (0 for 'a', 1 for 'b', ..., 25 for 'z')
-
-                // Make sure the letter is not in the unavailableLetters
-                bool isUnavailable = false;
-                for (char unavailable : answer.unavailableLetters) {
-                    if (unavailable == c) {
-                        isUnavailable = true;
-                        break;
-                    }
-                }
-
-                if (!isUnavailable && !seen[index]) {
-                    ++letterCounts[index];  // Count the letter once per word
-                    seen[index] = true; // Avoid double counting for the same word
+unsigned int letterPoint::countLetterInstances(const std::vector<Scores>& scoreVector, char letter) {
+    unsigned int count = 0;
+    for (const Scores& score : scoreVector) {
+        if (score.word.find(letter) != std::string::npos) {
+            std::vector<bool> seen(26, false);
+            for (char ch : score.word) {
+                if (ch == letter && !seen[ch - 'a']) {
+                    ++count;
+                    seen[ch - 'a'] = true;
+                    break;
                 }
             }
         }
     }
+    return count;
+}
 
-    return letterCounts;
+bool letterPoint::isUnavailable(char letter, const std::vector<char>& unavailableLetters) {
+    return std::find(unavailableLetters.begin(), unavailableLetters.end(), letter) != unavailableLetters.end();
+}
+
+std::vector<letterPoint> letterPoint::getPoints(Answer& ans) {
+    std::vector<letterPoint> pointsVector;
+    for (char c = 'a'; c <= 'z'; ++c) {
+        if (isUnavailable(c, ans.unavailableLetters)) {
+            continue;
+        }
+
+        unsigned int count = 0;
+        for (const Scores& score : ans.scoreVector) {
+            bool seen = false;
+            for (char ch : score.word) {
+                if (ch == c) {
+                    seen = true;
+                    break;
+                }
+            }
+            if (seen) {
+                ++count;
+            }
+        }
+        pointsVector.emplace_back(c, count);
+    }
+    return pointsVector;
+}
+
+void letterPoint::updateScore(Answer& ans) {
+	std::vector<letterPoint> letterPoints;
+	letterPoints = getPoints(ans);
+	for (const letterPoint& lp : letterPoints) {
+        std::cout << "letter: " << lp.letter << " point: " << lp.points << std::endl;
+    }
 }
 
 
-void solveFor(Answer wordleAns)
-{
-	std::vector<unsigned int> a = countLetterInstance(wordleAns.remainingSolutions, wordleAns);
-
-	int i = 0;
-	char c = 'a';
-	while (c <= 'z')
-	{
-		std::cout << a[i] << " number of words have the letter " << c << std::endl;
-		i++;
-		c++;
-	}
-}
-
-int main ()
-{
-	Answer wordleAns;
-	solveFor(wordleAns);	
+void letterPoint::solveFor(Answer& ans) {
+	updateScore(ans);
 }

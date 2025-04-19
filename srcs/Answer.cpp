@@ -1,9 +1,8 @@
-#include "Answer.h"
-#include <cctype>
+#include "answer.h"
 #include <termios.h>
+#include <cctype>
 
-std::vector<std::string> Answer::loadAnswersFromFile(const std::string& filename)
-{
+std::vector<std::string> Answer::loadAnswersFromFile(const std::string& filename) { 
 	std::ifstream file(filename);
 	std::vector<std::string> allSolutions;
 	std::string possibleAnswer;
@@ -17,8 +16,7 @@ std::vector<std::string> Answer::loadAnswersFromFile(const std::string& filename
 	return allSolutions;
 }
 
-bool Answer::isOnlyLetters(const std::string& input)
-{
+bool Answer::isOnlyLetters(const std::string& input) {
 	for (char c: input)
 	{
 		if (!std::isalpha(c))
@@ -27,8 +25,7 @@ bool Answer::isOnlyLetters(const std::string& input)
 	return true;
 }
 
-bool Answer::validateAnswer(std::string& word)
-{
+bool Answer::validateAnswer(std::string& word) {
 	// std::cout << "word input: " << word << std::endl;
 	for (char& c : word)
 		c = std::tolower(static_cast<unsigned char>(c));
@@ -54,8 +51,7 @@ bool Answer::validateAnswer(std::string& word)
 	return false;
 }
 
-std::string Answer::inputAnswer(size_t maxLength)
-{
+std::string Answer::inputAnswer(unsigned int maxLength) {
 	termios oldt, newt; // declaring two terminal config structs
 	std::string answer;
 	char c;
@@ -97,4 +93,12 @@ std::string Answer::inputAnswer(size_t maxLength)
 	tcsetattr(0, TCSANOW, &oldt);
 
 	return answer;
+}
+
+std::vector<Scores> Answer::createScores(const std::vector<std::string>& words) {
+    std::vector<Scores> scoresList;
+    for (const std::string& word : words) {
+        scoresList.emplace_back(word, 0);
+    }
+    return scoresList;
 }
