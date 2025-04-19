@@ -8,13 +8,13 @@ class letterPoint {
 			: 	letter(c), 
 				points(pt)
 		{}
-		char letter;
-		unsigned int points;
-		static void solveFor(Answer& ans);
+		unsigned int	points;
+		char			letter;
+		static void updateScore(Answer& ans);
+
 	private:
 		static std::vector<letterPoint> getPoints(Answer& ans);
 		static unsigned int countLetterInstances(const std::vector<Scores>& scoreVector, char letter);
-		static void updateScore(Answer& ans);
 		static bool isUnavailable(char letter, const std::vector<char>& unavailableLetters);
 
 };		

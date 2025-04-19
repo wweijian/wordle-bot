@@ -1,63 +1,46 @@
-#include "solver.h"
-#include <vector>
-#include <string> 
+#include "answer.h"
+#include "letterPoint.h"
+#include "main.h"
+#include <string>
 
+std::string maxScoreEntry(const Answer& ans) {
+    
+    Scores maxScoreEntry = ans.scoreVector[0];
 
-unsigned int letterPoint::countLetterInstances(const std::vector<Scores>& scoreVector, char letter) {
-    unsigned int count = 0;
-    for (const Scores& score : scoreVector) {
-        if (score.word.find(letter) != std::string::npos) {
-            std::vector<bool> seen(26, false);
-            for (char ch : score.word) {
-                if (ch == letter && !seen[ch - 'a']) {
-                    ++count;
-                    seen[ch - 'a'] = true;
-                    break;
-                }
-            }
+    for (const Scores& score : ans.scoreVector) {
+        if (score.score > maxScoreEntry.score) {
+            maxScoreEntry = score ;
         }
     }
-    return count;
+
+    return maxScoreEntry.word;
 }
 
-bool letterPoint::isUnavailable(char letter, const std::vector<char>& unavailableLetters) {
-    return std::find(unavailableLetters.begin(), unavailableLetters.end(), letter) != unavailableLetters.end();
+void updateEntries (Answer& ans, std::string guess) {
+
+	// change unavailable letters
+		// add all letters that do not match
+
+	// remove all bad entries
+		// remove words without letters that are correct
+		// remove words that have letters in the wrong position, if there is one matching position
+
+
 }
 
-std::vector<letterPoint> letterPoint::getPoints(Answer& ans) {
-    std::vector<letterPoint> pointsVector;
-    for (char c = 'a'; c <= 'z'; ++c) {
-        if (isUnavailable(c, ans.unavailableLetters)) {
-            continue;
-        }
-
-        unsigned int count = 0;
-        for (const Scores& score : ans.scoreVector) {
-            bool seen = false;
-            for (char ch : score.word) {
-                if (ch == c) {
-                    seen = true;
-                    break;
-                }
-            }
-            if (seen) {
-                ++count;
-            }
-        }
-        pointsVector.emplace_back(c, count);
-    }
-    return pointsVector;
-}
-
-void letterPoint::updateScore(Answer& ans) {
-	std::vector<letterPoint> letterPoints;
-	letterPoints = getPoints(ans);
-	for (const letterPoint& lp : letterPoints) {
-        std::cout << "letter: " << lp.letter << " point: " << lp.points << std::endl;
-    }
-}
-
-
-void letterPoint::solveFor(Answer& ans) {
-	updateScore(ans);
+void solveFor(Answer& ans) {
+	while(true){
+		
+		letterPoint::updateScore(ans);
+		std::string guessWord = maxScoreEntry(ans);
+		std::cout << "guess is " << guessWord << std::endl;
+		if (guessWord == ans.correct) {
+			std::cout << "You got it!" << std::endl;
+			return ; 
+		}
+		else {
+			updateEntries(ans, guessWord);
+			return;
+		}
+	}
 }
