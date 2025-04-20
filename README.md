@@ -16,7 +16,7 @@ Throughout this process, I've considered the following the be the important take
 
 ## Set-Up
 
-**do note that this program only runs on unix/linux and the compiler must be of at least version 14**
+**Do note that this program only runs on unix/linux and the compiler must be of at least version 14**  
     1. Download all the files that are in this repository (do not change the names of the file)  
     2. Go to the main folder on your terminal  
     3. Type make to compile all the necessary files  
