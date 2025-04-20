@@ -7,21 +7,31 @@ I had no idea the algorithm was going to fare this poorly, and will improve on t
 
 ### Takeaways
 Throughout this process, I've considered the following the be the important takeaways:
+
     1. Learning how to type without letters showing in terminal
+
     2. The use of classes, vectors and maps
+
     3. Reading of file through the program
 
 
 ## Set-Up
 
-** do note that this program only runs on unix/linux and the compiler must be of at least version 14 **
+**do note that this program only runs on unix/linux and the compiler must be of at least version 14**
     1. Download all the files that are in this repository (do not change the names of the file)
+
     2. Go to the main folder on your terminal
+
     3. Type make to compile all the necessary files
+
     4. Type make run to start the guesser
+
     5. Type in any 5-letter word that you know
+
     6. Wordie will attempt to guess your word
+
     7. After Wordie guesses your word, you can type make clean in the command line to delete the compiled program. 
+    
 
 
 ## Input Handling Process
