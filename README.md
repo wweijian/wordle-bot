@@ -2,7 +2,9 @@
 
 ## Information
 An avid wordle fan who has played the game since its inception, I want to take an algorithmic approach to solving wordle while learning how to write a program in C++.  
+  
 This is a probability based model, that takes word with the combined highest occurrence scores of letters as a proxy of the likelihood the word is the answer. If it is wrong, it eliminates all the answers which fails the clues, and try again. Given that the first word "aeros" contains letters with some of the highest occurence scores, it should also eliminate the biggest segments of the possible solutions.  
+  
 I had no idea the algorithm was going to fare this poorly, and will improve on this some day as I get better at programming. In the meantime, I'm happy that I've coded something that is functional and is useable in further attempts at creating a better algorithm.  
 
 ### Takeaways
