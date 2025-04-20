@@ -83,12 +83,53 @@ bool hasRequiredLetterFrequencies(const std::string& word, const Guess& evaluate
 }
 
 bool hasUnavailableLetters(const std::string& word, const Guess& evaluatedGuess) {
+    // Build a map of which letters are unavailable in which positions
+    std::map<char, std::vector<int>> unavailablePositions;
+    
+    // Mark positions where letters are definitely not correct
     for (int i = 0; i < 5; i++) {
-        if (!evaluatedGuess[i].correctLetter && 
-            word.find(evaluatedGuess[i].c) != std::string::npos) {
-            return true; // Word contains an unavailable letter
+        if (!evaluatedGuess[i].correctLetter) {
+            unavailablePositions[evaluatedGuess[i].c].push_back(i);
         }
     }
+    
+    // Check if the word contains any letters in positions where they are known to be unavailable
+    for (const auto& pair : unavailablePositions) {
+        char letter = pair.first;
+        const auto& positions = pair.second;
+        
+        // Count how many times this letter appears in the guess but was marked incorrect
+        int unavailableCount = positions.size();
+        
+        // Count how many times this letter appears correctly in other positions
+        int correctCount = 0;
+        for (int i = 0; i < 5; i++) {
+            if (evaluatedGuess[i].correctLetter && evaluatedGuess[i].c == letter) {
+                correctCount++;
+            }
+        }
+        
+        // Count how many times this letter appears in the word
+        int wordCount = 0;
+        for (char c : word) {
+            if (c == letter) {
+                wordCount++;
+            }
+        }
+        
+        // If this letter appears more times in the word than it does in correct positions in the guess,
+        // then the word should be filtered out
+        if (wordCount > correctCount) {
+            return true;
+        }
+        
+        // Also, check for specific positions where we know the letter can't be
+        for (int pos : positions) {
+            if (word[pos] == letter) {
+                return true;
+            }
+        }
+    }
+    
     return false;
 }
-
