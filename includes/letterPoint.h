@@ -16,6 +16,5 @@ class letterPoint {
 		static std::vector<letterPoint> getPoints(Answer& ans);
 		static unsigned int countLetterInstances(const std::vector<Scores>& scoreVector, char letter);
 		static bool isUnavailable(char letter, const std::vector<char>& unavailableLetters);
-
 };		
 	

@@ -23,7 +23,7 @@ class Answer
         Answer()
             :   correct(inputAnswer(5)),
                 scoreVector(createScores(loadAnswersFromFile("data/14855solutions.txt"))),
-                unavailableLetters({'g','q'}),
+                unavailableLetters({}),
                 attempt(0)
         {}
         const std::string            correct;
