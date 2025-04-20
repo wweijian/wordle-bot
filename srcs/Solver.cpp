@@ -28,7 +28,6 @@ void filterWordsByGuess(Answer& ans, const Guess& evaluatedGuess) {
     );
 }
 
-// Print the guess evaluation for debugging
 void printGuessEvaluation(const Guess& guess) {
     std::cout << "Guess evaluation:" << std::endl;
     for (int i = 0; i < 5; i++) {
@@ -53,9 +52,7 @@ std::string maxScoreEntry(const Answer& ans) {
 }
 
 void removeGuessFromScoreVector(Answer& ans, const std::string& guessWord) {
-    // Only remove if it's not the correct answer
     if (guessWord != ans.correct) {
-        // Use remove_if to find and remove the entry with the matching word
         ans.scoreVector.erase(
             std::remove_if(ans.scoreVector.begin(), ans.scoreVector.end(),
                 [&guessWord](const Scores& score) {
@@ -67,41 +64,22 @@ void removeGuessFromScoreVector(Answer& ans, const std::string& guessWord) {
 }
 
 void solveFor(Answer ans) {
-    // Track if the answer was filtered out
     bool answerRemoved = false;
-    // Track number of attempts
     int attemptCount = 0;
     
     while (true) {
-        // Step 1: Update scores for all words
         letterPoint::updateScore(ans);
-        
-        // Step 2: Get the highest-scoring word as our guess
         std::string guessWord = maxScoreEntry(ans);
-        
-        // Print the current guess and increment attempt counter
         attemptCount++;
         std::cout << "Attempt " << attemptCount << ": Guessing \"" << guessWord << "\"" << std::endl;
-        
-        // Step 3: Check if the guess is correct
         if (guessWord == ans.correct) {
             std::cout << "Success! Found the answer \"" << ans.correct << "\" in " << attemptCount << " attempts." << std::endl;
             break;
         }
-
-		// Step 4: Remove the incorrect guess from the score vector
 		removeGuessFromScoreVector(ans, guessWord);
-        
-        // Step 4: If not correct, evaluate the guess and filter the words
         Guess evaluatedGuess = evaluateGuess(guessWord, ans);
-        
-        // Store the size before filtering for debug purposes
         size_t beforeSize = ans.scoreVector.size();
-        
-        // Apply our filtering functions
         filterWordsByGuess(ans, evaluatedGuess);
-        
-        // Step 5: Check if we accidentally filtered out the correct answer
         bool correctWordExists = false;
         for (const auto& score : ans.scoreVector) {
             if (score.word == ans.correct) {
@@ -109,16 +87,11 @@ void solveFor(Answer ans) {
                 break;
             }
         }
-        
         if (!correctWordExists) {
             std::cout << "Error: The correct answer \"" << ans.correct << "\" was filtered out. Algorithm failed." << std::endl;
             answerRemoved = true;
             break;
         }
-        
-        // Optional: Print remaining words count for debugging
         std::cout << "  Filtered from " << beforeSize << " to " << ans.scoreVector.size() << " possible words." << std::endl;
-        
-        // Step 6: Continue the loop (goes back to step 1)
     }
 }

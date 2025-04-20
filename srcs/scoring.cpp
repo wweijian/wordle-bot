@@ -50,32 +50,24 @@ std::vector<letterPoint> letterPoint::getPoints(Answer& ans) {
 }
 
 void letterPoint::updateScore(Answer& ans) {
-    // Get points for each letter
     std::vector<letterPoint> letterPoints = getPoints(ans);
     
-    // Create a lookup map for faster access to letter points
     std::unordered_map<char, unsigned int> pointsMap;
     for (const auto& lp : letterPoints) {
         pointsMap[lp.letter] = lp.points;
     }
     
-    // Update the score for each word in the scoreVector
     for (auto& scoreEntry : ans.scoreVector) {
         unsigned int totalScore = 0;
         
-        // Track which letters we've already counted in this word
         std::vector<bool> counted(26, false);
         
-        // For each letter in the word
         for (char c : scoreEntry.word) {
-            // If letter hasn't been counted yet and has points assigned
             if (!counted[c - 'a'] && pointsMap.find(c) != pointsMap.end()) {
                 totalScore += pointsMap[c];
-                counted[c - 'a'] = true;  // Mark this letter as counted
+                counted[c - 'a'] = true;
             }
         }
-        
-        // Update the score
         scoreEntry.score = totalScore;
     }
 }
