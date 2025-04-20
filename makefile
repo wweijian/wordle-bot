@@ -5,6 +5,7 @@ INCL_DIR = includes
 SRCS = $(SRCS_DIR)/main.cpp\
 		$(SRCS_DIR)/answer.cpp\
 		$(SRCS_DIR)/scoring.cpp\
+		$(SRCS_DIR)/checkLetters.cpp\
 		$(SRCS_DIR)/solver.cpp
 TARGET = $(TARGET_DIR)wordie-bot
 CC = g++
