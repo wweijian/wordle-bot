@@ -16,7 +16,7 @@ Throughout this process, I've considered the following the be the important take
 
 ## Set-Up
 
-**Do note that this program only runs on unix/linux and the compiler must be of at least version 14**  
+   ***Do note that this program only runs on unix/linux and the compiler must be of at least version 14**  
 
     1. Download all the files that are in this repository (do not change the names of the file)  
     2. Go to the main folder on your terminal  
@@ -127,6 +127,9 @@ function hasUnavailableLetters(word, evaluatedGuess):
         e. If word contains letter in specific unavailable position, return true
     Return false
 ```
+
+  *** note: I have since realised in further testing of the wordie that I did not filter out words with letters in the incorrect position, it maybe is something to patch at a later time**  
+  
 
 ## Scoring Mechanism
 ```
